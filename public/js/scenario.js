@@ -118,6 +118,7 @@ $(function() {
 		var $txt = $( this ).children( ".header__geolocation-city" ).text(),
 				$txtBtn = $( ".header__geolocation-button" );
 		$txtBtn.text( $txt );
+		$( this ).closest( ".header__geolocation-block" ).hide();
 		$( this ).addClass( "header__geolocation-item--active" );
 	});
 });

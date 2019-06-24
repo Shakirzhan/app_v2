@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import createReactClass from "create-react-class"
 import menuList from "./menu_list"
 import intermediaReport from "./intermedia_report"
+import mainReport from "./main_report"
+import questionList from "./question_list"
 
 var application = createReactClass({
   getInitialState: function() {
@@ -86,6 +88,114 @@ var application = createReactClass({
       </div>
     );
   },
+  FinalReports: function() {
+    function elements(el) {
+      const doubled = el.map((it) =>
+        <Link to="/det" className={`annual-section__item ${it.class}`} key={it.id}>
+          <b className="annual-section__item-head">{it.title}</b>
+          <b className="annual-section__item-date">{it.date}</b>
+        </Link>
+      );
+      return(
+        <div className="annual-section__list">
+          {doubled} 
+        </div> 
+      );
+    }
+    const doubled = mainReport.map((it) =>
+      <div className="annual-section" key={it.id}>
+        <b className="annual-section__head">{it.year}</b>
+        {elements(it.child_element)} 
+      </div> 
+    );
+    return (
+      <div className="main-wrap">
+        {doubled} 
+      </div>
+    );
+  },
+  QuestionContent: function() {
+    return (
+      <div className="main-form">
+        <h2 className="main-form__main-head main-form__main-head--bold">Задать вопрос</h2>
+        <div className="main-form__section">
+          <b className="main-form__head">Ваш email</b>
+          <input type="text" name="text" className="main-form__txt" placeholder="help@transdorstroy.ru" />
+        </div>
+        <div className="main-form__section">
+          <b className="main-form__head">Ваш вопрос</b>
+          <textarea className="main-form__txt" placeholder="Введите вопрос"></textarea>
+        </div>
+        <div className="jobs__btn-wrap">
+          <a href="#" className="jobs__button jobs__button-blue">Отправить</a>
+        </div>
+      </div>
+    ); 
+  },
+  PopularQuestions: function() {
+    const doubled = questionList.map((it) =>
+      <div key={`${it.id}`}>
+        <b className="question__head">{it.title}</b>
+        <p className={`question__dscr ${it.class_show}`}>{it.description}</p> 
+      </div>
+    );
+    return (
+      <div className="main-form">
+        {doubled}   
+      </div>
+    );
+  },
+  viewReport: function() {
+
+    return(
+      <div className="main-form">
+        <div className="main-form__child">
+          <h2 className="main-form__child-head">Наименование автомобильной дороги</h2>
+          <div className="main-form__section">
+            <b className="main-form__head">Тип дороги</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="Автомобильная дорога регионального и межмунициального значения" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Код в СКДФ</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="Код" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Наименование автомобильной дороги</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="Код" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Идентификатор</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="Код" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Протяженность покрытия дороги, км</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="1" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Площадь покрытия дороги, кв.м</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="1" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Адрес участка: конец (км+м)</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="1+001" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Вид работ</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="Устройство светофорных объектов" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Мощность работ, шт</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="30" />
+          </div>
+          <div className="main-form__section">
+            <b className="main-form__head">Стоимость, тыс. руб.</b>
+            <input type="text" name="text" className="main-form__txt" placeholder="30" />
+          </div>
+        </div>
+      </div>
+    );
+
+  },
   Menu: function() {
     const doubled = menuList.map((it) => 
       <li className={`main-tab__item col-lg-3 ${it.class_active}`} key={`${it.id}`}>
@@ -151,8 +261,15 @@ var application = createReactClass({
             
               <Route component={this.Menu} />
               <div>
+                <Route exact path="/" component={this.FinalReports} />
+
                 <Route path="/interimreports" component={this.InterimReports} />
                 <Route path="/interimreports" component={this.InterimReportsContent} />
+              
+                <Route path="/question" component={this.QuestionContent} />
+                <Route path="/question" component={this.PopularQuestions} />
+              
+                <Route path="/det" component={this.viewReport} />
               </div>
             
           </div>
